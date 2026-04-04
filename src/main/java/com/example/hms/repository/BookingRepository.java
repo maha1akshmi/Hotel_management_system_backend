@@ -20,4 +20,14 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     // Get 10 most recent bookings for dashboard widget
     List<Booking> findTop10ByOrderByBookedAtDesc();
+    // All bookings for a specific user, ordered newest first
+    List<Booking> findByUserIdOrderByBookedAtDesc(Long userId);
+
+    // Find active (non-cancelled) bookings for a room that overlap with given dates
+    List<Booking> findByRoomIdAndStatusNotAndCheckInLessThanAndCheckOutGreaterThan(
+            Long roomId,
+            Booking.BookingStatus excludedStatus,
+            LocalDate checkOut,
+            LocalDate checkIn
+    );
 }

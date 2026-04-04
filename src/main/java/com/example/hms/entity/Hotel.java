@@ -28,6 +28,7 @@ public class Hotel {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Column(length = 255)
     private String address;
 
     @Column(length = 100)

@@ -1,14 +1,14 @@
 package com.example.hms.entity;
 
-import com.example.hms.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -46,11 +46,11 @@ public class User {
     @Column(name = "is_active")
     private Boolean isActive = true;
 
+    @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
+    public enum Role {
+        USER, ADMIN
     }
 }

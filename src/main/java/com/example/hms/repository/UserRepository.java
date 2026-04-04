@@ -14,4 +14,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     long countByIsActiveTrue();
 
     long countByIsActiveFalse();
+    boolean existsByEmail(String email);
+
+    Optional<User> findByOauthProviderAndOauthId(String oauthProvider, String oauthId);
 }

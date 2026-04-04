@@ -2,12 +2,16 @@ package com.example.hms.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.math.BigDecimal;
 
+/**
+ * Stub entity for FK references — owned by Module 2 (Jeyanth).
+ * Module 2 will expand this with full fields and logic.
+ */
 @Entity
 @Table(name = "rooms")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -38,6 +42,7 @@ public class Room {
     @Column(name = "available_rooms")
     private Integer availableRooms;
 
+    @Builder.Default
     @Column(name = "is_active")
     private Boolean isActive = true;
 }

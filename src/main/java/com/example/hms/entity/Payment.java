@@ -20,14 +20,14 @@ public class Payment {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "booking_id", nullable = false)
+    @JoinColumn(name = "booking_id", nullable = false, unique = true)
     private Booking booking;
 
-    @Column(precision = 10, scale = 2)
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
 
     @Column(length = 50)
-    private String method;
+    private String method; // CARD, UPI, NET_BANKING
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -38,4 +38,8 @@ public class Payment {
 
     @Column(name = "paid_at")
     private LocalDateTime paidAt;
+
+    public enum PaymentStatus {
+        PENDING, SUCCESS, FAILED
+    }
 }
