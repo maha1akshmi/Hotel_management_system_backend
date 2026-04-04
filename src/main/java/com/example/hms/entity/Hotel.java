@@ -1,18 +1,14 @@
 package com.example.hms.entity;
 
+import com.example.hms.enums.HotelStatus;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-
 import java.time.LocalDateTime;
 
-/**
- * Stub entity for FK references — owned by Module 2 (Jeyanth).
- * Module 2 will expand this with full fields and logic.
- */
 @Entity
 @Table(name = "hotels")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -23,7 +19,7 @@ public class Hotel {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
     @Column(nullable = false, length = 150)
@@ -48,11 +44,14 @@ public class Hotel {
     @Column(nullable = false)
     private HotelStatus status;
 
-    @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    public enum HotelStatus {
-        PENDING, APPROVED, REJECTED
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        if (this.status == null) {
+            this.status = HotelStatus.PENDING;
+        }
     }
 }

@@ -1,7 +1,9 @@
 package com.example.hms.entity;
 
+import com.example.hms.enums.BookingStatus;
 import jakarta.persistence.*;
 import lombok.*;
+
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
@@ -10,7 +12,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "bookings")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -51,6 +54,11 @@ public class Booking {
     @Column(nullable = false)
     private BookingStatus status;
 
+   
+
+    @PrePersist
+    protected void onCreate() {
+        this.bookedAt = LocalDateTime.now();
     @CreationTimestamp
     @Column(name = "booked_at", updatable = false)
     private LocalDateTime bookedAt;

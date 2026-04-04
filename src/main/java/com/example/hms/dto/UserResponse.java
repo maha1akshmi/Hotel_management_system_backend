@@ -1,13 +1,10 @@
 package com.example.hms.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -17,6 +14,7 @@ public class UserResponse {
     private String email;
     private String phone;
     private String role;
+    private String oauthProvider;
     private Boolean isVerified;
     private Boolean isActive;
     private LocalDateTime createdAt;
