@@ -37,6 +37,8 @@ public class SecurityConfig {
                     "/v3/api-docs/**",
                     "/v3/api-docs"
                 ).permitAll()
+                // Public hotel endpoints — no auth required
+                .requestMatchers("/api/v1/hotels/**").permitAll()
                 // Admin endpoints — ADMIN role only
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 // All other endpoints — permit (other modules handle their own security)
