@@ -1,5 +1,6 @@
 package com.example.hms.entity;
 
+import com.example.hms.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -49,8 +50,4 @@ public class User {
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
-
-    public enum Role {
-        USER, ADMIN
-    }
 }

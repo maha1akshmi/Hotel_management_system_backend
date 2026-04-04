@@ -2,6 +2,7 @@ package com.example.hms.service;
 
 import com.example.hms.dto.*;
 import com.example.hms.entity.User;
+import com.example.hms.enums.Role;
 import com.example.hms.exception.BadRequestException;
 import com.example.hms.exception.UnauthorizedException;
 import com.example.hms.repository.UserRepository;
@@ -48,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
                 .email(request.getEmail())
                 .passwordHash(passwordEncoder.encode(request.getPassword()))
                 .phone(request.getPhone())
-                .role(User.Role.USER)
+                .role(Role.USER)
                 .isVerified(false)
                 .isActive(true)
                 .build();

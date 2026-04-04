@@ -3,6 +3,7 @@ package com.example.hms.service;
 import com.example.hms.dto.BookingResponse;
 import com.example.hms.dto.CreateBookingRequest;
 import com.example.hms.entity.*;
+import com.example.hms.enums.BookingStatus;
 import com.example.hms.exception.BadRequestException;
 import com.example.hms.exception.ResourceNotFoundException;
 import com.example.hms.exception.UnauthorizedException;
@@ -69,7 +70,7 @@ public class BookingServiceImpl implements BookingService {
         List<Booking> overlapping = bookingRepository
                 .findByRoomIdAndStatusNotAndCheckInLessThanAndCheckOutGreaterThan(
                         room.getId(),
-                        Booking.BookingStatus.CANCELLED,
+                        BookingStatus.CANCELLED,
                         request.getCheckOut(),
                         request.getCheckIn()
                 );
@@ -99,7 +100,7 @@ public class BookingServiceImpl implements BookingService {
                 .guests(request.getGuests())
                 .roomsBooked(request.getRoomsBooked())
                 .totalPrice(totalPrice)
-                .status(Booking.BookingStatus.CONFIRMED)
+                .status(BookingStatus.CONFIRMED)
                 .build();
 
         Booking saved = bookingRepository.save(booking);
@@ -142,7 +143,7 @@ public class BookingServiceImpl implements BookingService {
         }
 
         // Can only cancel CONFIRMED bookings
-        if (booking.getStatus() != Booking.BookingStatus.CONFIRMED) {
+        if (booking.getStatus() != BookingStatus.CONFIRMED) {
             throw new BadRequestException("Only confirmed bookings can be cancelled. Current status: " + booking.getStatus());
         }
 
@@ -151,7 +152,7 @@ public class BookingServiceImpl implements BookingService {
             throw new BadRequestException("Cannot cancel a booking that has already started");
         }
 
-        booking.setStatus(Booking.BookingStatus.CANCELLED);
+        booking.setStatus(BookingStatus.CANCELLED);
         Booking saved = bookingRepository.save(booking);
         return mapToResponse(saved);
     }
@@ -161,6 +162,7 @@ public class BookingServiceImpl implements BookingService {
                 .id(booking.getId())
                 .userId(booking.getUser().getId())
                 .userName(booking.getUser().getName())
+                .userEmail(booking.getUser().getEmail())
                 .hotelId(booking.getHotel().getId())
                 .hotelName(booking.getHotel().getName())
                 .hotelCity(booking.getHotel().getCity())

@@ -4,8 +4,6 @@ import com.example.hms.enums.BookingStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
-import org.hibernate.annotations.CreationTimestamp;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -54,16 +52,11 @@ public class Booking {
     @Column(nullable = false)
     private BookingStatus status;
 
-   
+    @Column(name = "booked_at", updatable = false)
+    private LocalDateTime bookedAt;
 
     @PrePersist
     protected void onCreate() {
         this.bookedAt = LocalDateTime.now();
-    @CreationTimestamp
-    @Column(name = "booked_at", updatable = false)
-    private LocalDateTime bookedAt;
-
-    public enum BookingStatus {
-        CONFIRMED, CANCELLED, COMPLETED
     }
 }

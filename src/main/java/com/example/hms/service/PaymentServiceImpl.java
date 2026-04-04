@@ -4,6 +4,8 @@ import com.example.hms.dto.CreatePaymentRequest;
 import com.example.hms.dto.PaymentResponse;
 import com.example.hms.entity.Booking;
 import com.example.hms.entity.Payment;
+import com.example.hms.enums.BookingStatus;
+import com.example.hms.enums.PaymentStatus;
 import com.example.hms.exception.BadRequestException;
 import com.example.hms.exception.ResourceNotFoundException;
 import com.example.hms.exception.UnauthorizedException;
@@ -39,7 +41,7 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
         // Can only pay for confirmed bookings
-        if (booking.getStatus() != Booking.BookingStatus.CONFIRMED) {
+        if (booking.getStatus() != BookingStatus.CONFIRMED) {
             throw new BadRequestException("Can only pay for confirmed bookings. Current status: " + booking.getStatus());
         }
 
@@ -61,7 +63,7 @@ public class PaymentServiceImpl implements PaymentService {
                 .booking(booking)
                 .amount(booking.getTotalPrice())
                 .method(method)
-                .status(Payment.PaymentStatus.SUCCESS)
+                .status(PaymentStatus.SUCCESS)
                 .transactionId(transactionId)
                 .paidAt(LocalDateTime.now())
                 .build();
