@@ -42,13 +42,10 @@ public class AuthController {
         return ResponseEntity.ok(ApiResponse.success(response, "Token refreshed successfully"));
     }
 
-    @GetMapping("/oauth2/google")
-    @Operation(summary = "Google OAuth2 login", description = "Redirects to Google OAuth2 consent screen")
-    public ResponseEntity<ApiResponse<String>> googleLogin() {
-        // Redirect to Spring Security OAuth2 login flow
-        return ResponseEntity.ok(ApiResponse.success(
-                "/oauth2/authorization/google",
-                "Redirect to this URL for Google login"
-        ));
+    @PostMapping("/google")
+    @Operation(summary = "Google OAuth2 login", description = "Verifies Google ID token and returns JWT tokens")
+    public ResponseEntity<ApiResponse<AuthResponse>> googleLogin(@Valid @RequestBody GoogleTokenRequest request) {
+        AuthResponse response = authService.googleLogin(request);
+        return ResponseEntity.ok(ApiResponse.success(response, "Google login successful"));
     }
 }
