@@ -1,0 +1,16 @@
+# ─── Build artefacts ───
+target/
+*.class
+
+# ─── IDE ───
+.idea/
+*.iml
+.vscode/
+
+# ─── Env files (never commit secrets) ───
+.env
+.env.*
+
+# ─── OS ───
+.DS_Store
+Thumbs.db
